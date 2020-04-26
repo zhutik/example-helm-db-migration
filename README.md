@@ -36,6 +36,32 @@ kubectl create namespace example-helm-db-migration
 export KUBE_NAMESPACE=example-helm-db-migration
 ```
 
+## Install the chart and deploy application
+
+Make sure, you have created new namespace, or have already one you want to use.
+
+Make sure you have `KUBE_NAMESPACE` environment variable exposed
+
+### Run helm
+
+```bash
+# Lint your chart
+helm lint _helm/app-db-migration
+
+# Dry Run to test your deployment
+helm upgrade --install --dry-run --atomic --namespace=$KUBE_NAMESPACE app-db-migration ./_helm/app-db-migration --timeout 120s
+
+# Install chart
+helm upgrade --install --atomic --namespace=$KUBE_NAMESPACE app-db-migration ./_helm/app-db-migration --timeout 120s
+``` 
+
+Flag details:
+
+- `--dry-run` simulate an upgrade w/o applying chart details 
+- `--atomic` automatically rollbacks changes in case of failed deployment or timeout exceeded
+- `--namespace` easy way to deploy the chart to the given namespace w/o specifying this in `yaml` files
+- `--timeout` time to wait for any individual Kubernetes operation
+
 ## TODO:
 
 - [x] Add instructions on how to create namespace
