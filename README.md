@@ -7,13 +7,17 @@ Goal: provide example of K8s zero-downtime deployment with database migration fo
 
 ## Requirements
 
-- Kubectl installed
-- Kubernetes cluster running v1.16+ (f.e. minikube)
-- Helm3 installed
+- [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed
+- Kubernetes cluster running v1.16+ (f.e. [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/))
+- [Helm3](https://helm.sh/docs/intro/install/) installed
 - Optional: docker installed (to build and push images)
 
+## Before we start
 
-## Build & Push
+1. We need to build and push docker images that would be used inside K8s pod.
+2. (optional) We need to create separate K8s namespace. This is an optional step, but it's recommended to have applications separated into different namespaces. 
+
+### Build & Push
 
 ```bash
 # build and push Nginx 1.17 docker image
@@ -25,9 +29,16 @@ docker build -t zhutik/example-helm-db-migration-php-fpm --force-rm -f _docker/p
 docker push zhutik/example-helm-db-migration-php-fpm
 ```
 
+### Create new namespace and expose it
+
+```bash
+kubectl create namespace example-helm-db-migration
+export KUBE_NAMESPACE=example-helm-db-migration
+```
+
 ## TODO:
 
-- [ ] Add instructions on how to create namespace
+- [x] Add instructions on how to create namespace
 - [ ] Add helm chart to deployment one pod with Nginx and php-fpm container
 - [ ] Add Percona DB container and deployment
 - [ ] Add DB migration job and pre-install/pre-upgrade hooks
