@@ -1,0 +1,14 @@
+{
+    "name": "zhutik/example-helm-db-migration",
+    "description": "Example project to show-case DB migration jobs with Helm3",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Igor Zhutaiev",
+            "email": "igor.zhutaiev@westwing.de"
+        }
+    ],
+    "require": {
+        "robmorgan/phinx": "^0.12.1"
+    }
+}
